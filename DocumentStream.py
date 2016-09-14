@@ -12,7 +12,8 @@ class DocumentStream:
             self.text = file.read()
             file.close()
         
-    def readWhole(self):
+    def readWhole(self, filename):
+        DocumentStream.readfile(self, filename)
         charindex = -1
         strlist = ''
         for i in self.text:
@@ -40,10 +41,10 @@ class DocumentStream:
     def writeWhole(self, filename):
         text = ""
         for i in self.slist:
-            text += i
+            text = text + i + "\n"
         result = DocumentStreamError.existFileName(filename)
         if result == "Pass":
-            file = open(fileName + "out","w")
+            file = open("out" + filename,"w")
             file.write(text)
             file.close()
 
