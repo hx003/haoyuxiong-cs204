@@ -1,15 +1,16 @@
+from DocumentStreamError import DocumentStreamError
+
 class DocumentStream:
     def __init__(self):
         self.text = ''
         self.slist = []
 
     def readfile(self, filename):
-        try:
+        result = DocumentStreamError.existFileName(filename)
+        if result == "Pass":
             file = open(filename,'r')
-        except Exception:
-            filename = None
-        self.text = file.read()
-        file.close()
+            self.text = file.read()
+            file.close()
         
     def readWhole(self):
         charindex = -1
@@ -35,15 +36,14 @@ class DocumentStream:
                 self.slist.append(strlist)
                 strlist = ''
         return self.slist
-
-    def writeWhole(self):
+        
+    def writeWhole(self, filename):
+        text = ""
         for i in self.slist:
-            print(i)
-                
- # def readfile()                   
-                
-        
-        #"!", "?", ";", "  "
+            text += i
+        result = DocumentStreamError.existFileName(filename)
+        if result == "Pass":
+            file = open(fileName + "out","w")
+            file.write(text)
+            file.close()
 
-
-        
