@@ -2,17 +2,30 @@ from DocumentStreamError import DocumentStreamError
 
 class DocumentStream:
     def __init__(self):
+        '''
+        initiate self.text and self.slist(sentence list)        
+        '''
         self.text = ''
         self.slist = []
 
     def readfile(self, filename):
+        '''
+        read file to self.text if no error occurred
+        or print Error Message        
+        '''
         result = DocumentStreamError.existFileName(filename)
         if result == "Pass":
             file = open(filename,'r')
             self.text = file.read()
             file.close()
+        else:
+            print("Error occurred when openning file")
         
     def readWhole(self, filename):
+        '''
+        from self.text split the text into the a list of sentences
+        identified by !.?; or more than one space        
+        '''
         DocumentStream.readfile(self, filename)
         charindex = -1
         strlist = ''
@@ -39,6 +52,10 @@ class DocumentStream:
         return self.slist
         
     def writeWhole(self, filename):
+        '''
+        write the text one sentence per line into a file called 
+        out + filename        
+        '''
         text = ""
         for i in self.slist:
             text = text + i + "\n"

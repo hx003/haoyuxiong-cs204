@@ -1,6 +1,11 @@
 import math
 class CommandLinePlotter:
     def Plan2D(x, y):
+        '''
+        input two lists x and y
+        which contains the [min, max] of the axis
+        plot the axis out
+        '''
         digitX = math.ceil(math.log(x[1], 10))
         if x[1] == 10 ** digitX:
             digitX += 1
@@ -24,7 +29,12 @@ class CommandLinePlotter:
                 print(str(x[0] + i) + " " * (digitX - a + 1), end = "" )
      
     def Scatter2D(x, y = None):
-        # assume two lists are sorted with same length
+        '''
+        assume two lists are sorted with same length
+        if only one list is given, it will be used as y-axis
+        x-axis will be 1 to length of the list
+        print axis and plot the points indicated by "x"
+        '''
         if y == None:
             y = []
             for i in range(len(x)):
