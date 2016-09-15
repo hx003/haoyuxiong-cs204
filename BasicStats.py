@@ -35,6 +35,12 @@ class BasicStats:
                 
         
     def topN(self, bdict, n):
+        ‘’‘
+        input a dictionary and the inquired number n for analysis,
+        analyze the dictionary, find the n words of highest frequency 
+        returns the dictionary of top n word and its frequency 
+        
+        ’‘’
         cdict = {}
         for i in range(n):
             cdict[self.maxl(bdict)] = bdict[self.maxl(bdict)]
