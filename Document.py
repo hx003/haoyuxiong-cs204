@@ -1,13 +1,11 @@
 import DocumentStream
-
 from DocumentStream import DocumentStream
-
-
 class Document:
 
-    
-    
     def __init__(self,filename = ''):
+        '''
+        initiate variables
+        '''
         self._Slist = []
         self.filename = filename
         self.id = 0
@@ -15,19 +13,23 @@ class Document:
         self.linecount = 0
         self.charcount = 0
         
-        
-
-        
-    @property
-    def Slist(self):
+    def __getitem__(self):
+        '''
+        getter for variable in self
+        '''
         pass
 
-    @Slist.setter
-    def Slist(self):
+    def__setitem__(self):
+        '''
+        setter for variable in self
+        '''
         pass
 
     def generateWhole(self):
-        
+        '''
+        using text read from DocumentStream
+        return the title information
+        '''
         a = DocumentStream()
         Slist = a.readWhole(self.filename)
         firstsen = Slist[0]
@@ -38,7 +40,6 @@ class Document:
         fircopy = fircopy.replace('"',' ')
         fircopy = fircopy.replace('-',' ')
         for i in fircopy:
-            
             if i == '\n':
                 i.replace('\n', ' ')               
                 firstlineword += fircopy[0:loc].split()
@@ -59,6 +60,9 @@ class Document:
 
 
     def getWordCount(self):
+        '''
+        count how many words are there in a file by splitting with space
+        '''
         a = DocumentStream()
         a.readfile(self.filename)
         text = a.text
@@ -70,11 +74,13 @@ class Document:
         
     
     def getLineCount(self):
+        '''
+        count number of lines identified by "\n"
+        '''
         a = DocumentStream()
         a.readfile(self.filename)
         text = a.text
         self.linecount = text.count('\n')
-        
         return self.linecount
     
         
