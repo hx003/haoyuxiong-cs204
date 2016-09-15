@@ -24,7 +24,6 @@ class CommandLinePlotter:
                 print(str(x[0] + i) + " " * (digitX - a + 1), end = "" )
      
     def Scatter2D(x, y = None):
-        # assume two lists are sorted with same length
         if y == None:
             y = []
             for i in range(len(x)):
@@ -32,21 +31,19 @@ class CommandLinePlotter:
             x = []
             for i in range(len(y)):
                 x.append(i + 1)
-                
         digitX = math.ceil(math.log(max(x), 10))  
         if max(x) == 10 ** digitX:
             digitX += 1
-            
-        for m in range(len(y)):
-            if y[len(y) - m - 1] in y:
-                print(y[len(y) - m - 1] + "\t" + "|" + " " * \
-                (x[len(y) - m - 1] - min(x)) * (digitX + 1) + "x")
+        for m in range(max(y) - min(y) + 1):
+            if max(y) - m in y:
+                a = y.index(max(y) - m)
+                print(str(max(y) - m) + "\t" + "|" + " " * (x[a] - min(x)) * (digitX + 1) + "x")
             else:
-                print(y[len(y) - m - 1] + "\t" + "|")
+                print(str(max(y) - m) + "\t" + "|")
                 
         print("\t ", end = "")
         
-        for i in range(len(x)):
+        for i in range(max(x) - min(x) + 1):
             if i == max(x) - min(x):
                 print("—" * (digitX + 1))
             else:
