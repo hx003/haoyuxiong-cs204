@@ -47,8 +47,9 @@ class DocumentStream:
                     elif self.text[charindex - 1] in '!.?;':
                         strlist = ''
                         continue
-                self.slist.append(strlist)
-                strlist = ''
+                if strlist != '':
+                    self.slist.append(strlist)
+                    strlist = ''
         return self.slist
         
     def writeWhole(self, filename):
