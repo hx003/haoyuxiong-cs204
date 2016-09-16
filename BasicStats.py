@@ -13,6 +13,9 @@ class BasicStats:
         if word already in dictionary, frequency + 1
         else create another tag if the words is not empty
         '''
+        '''
+        O will be length of the wlist = n
+        '''
         b = wlist
         adict = {}
         for word in b:
@@ -42,6 +45,9 @@ class BasicStats:
         input a dictionary and the inquired number n for analysis,
         analyze the dictionary, find the n words of highest frequency 
         returns the dictionary of top n word and its frequency         
+        '''
+        '''
+        O will be length of bdict times n = m * n
         '''
         cdict = {}
         ddict = deepcopy(bdict)
