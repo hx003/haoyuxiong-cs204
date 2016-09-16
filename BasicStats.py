@@ -8,6 +8,11 @@ class BasicStats:
 
     @staticmethod
     def createFreqMap(wlist):
+        '''
+        create a frequency map of a list of words by using dictionary
+        if word already in dictionary, frequency + 1
+        else create another tag if the words is not empty
+        '''
         b = wlist
         adict = {}
         for word in b:
@@ -15,9 +20,8 @@ class BasicStats:
                 adict[word.lower()] += 1
             elif word.lower() not in adict and word != '':
                 adict[word.lower()] = 1
-        
-            
         return adict
+        
     @staticmethod
     def maxl(kdict):
         b = 0
