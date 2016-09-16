@@ -57,6 +57,38 @@ class BasicStats:
             ddict[BasicStats.maxl(ddict)] = 1
         return cdict
         
-    
+    def minl(kdict):
+        '''
+        helper function of topN
+        find the key with the largest value in a dictionary
+        '''
+        b = 0
+        s = ''
+        for i in kdict:
+            if kdict[i] < b:
+                b = kdict[i]
+                s = i
+        return s
+                
+                
+    def BottomN(bdict, n):
+        '''
+        input a dictionary and the inquired number n for analysis,
+        analyze the dictionary, find the n words of highest frequency 
+        returns the dictionary of top n word and its frequency         
+        '''
+        '''
+        O will be length of bdict times n = m * n
+        if we want to put bottomn and topn together and have a faster runtime, 
+        we can use the state method.
+        '''
+        cdict = {}
+        ddict = deepcopy(bdict)
+        for i in range(n):
+
+            cdict[BasicStats.minl(ddict)] = ddict[BasicStats.minl(ddict)]
+            ddict[BasicStats.minl(ddict)] = 1
+        return cdict
+        
     
     
