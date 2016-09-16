@@ -24,6 +24,10 @@ class BasicStats:
         
     @staticmethod
     def maxl(kdict):
+        '''
+        helper function of topN
+        find the key with the largest value in a dictionary
+        '''
         b = 0
         s = ''
         for i in kdict:
@@ -34,6 +38,11 @@ class BasicStats:
                 
                 
     def topN(bdict, n):
+        '''
+        input a dictionary and the inquired number n for analysis,
+        analyze the dictionary, find the n words of highest frequency 
+        returns the dictionary of top n word and its frequency         
+        '''
         cdict = {}
         for i in range(n):
 
