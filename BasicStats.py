@@ -1,7 +1,7 @@
 from Document import Document
 from Sentence import Sentence
 from DocumentStream import DocumentStream
-
+from copy import deepcopy
 
 
 class BasicStats:
@@ -44,10 +44,11 @@ class BasicStats:
         returns the dictionary of top n word and its frequency         
         '''
         cdict = {}
+        ddict = deepcopy(bdict)
         for i in range(n):
 
-            cdict[BasicStats.maxl(bdict)] = bdict[BasicStats.maxl(bdict)]
-            bdict[BasicStats.maxl(bdict)] = 1
+            cdict[BasicStats.maxl(ddict)] = ddict[BasicStats.maxl(ddict)]
+            ddict[BasicStats.maxl(ddict)] = 1
         return cdict
         
     
