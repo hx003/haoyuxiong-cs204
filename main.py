@@ -21,11 +21,12 @@ def main():
     topdict = BasicStats.topN(worddict,int(n))
     lista = [[],[]]
     for i in topdict:
-        lista[0] += [i]
-        lista[1] += [topdict[i]]
-    graph = CommandLinePlotter.Scatter2D(lista[0])
+        lista[0] += [i] #words
+        lista[1] += [topdict[i]] #frequency
+    graph = CommandLinePlotter.Scatter2D(lista[1])
     
     
-    
+if __name__ == '__main__':
+    main()
     
     
