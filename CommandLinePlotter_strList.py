@@ -34,6 +34,7 @@ class CommandLinePlotter:
         if only one list is given, it will be used as y-axis
         x-axis will be 1 to length of the list
         print axis and plot the points indicated by "x"
+        list y must be a list of strings
         '''
         if y == None:
             y = []
