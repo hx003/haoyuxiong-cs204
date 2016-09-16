@@ -17,7 +17,6 @@ class Sentence:
         wordlist is created by splitting the sentence with space
         self.wordcount is updated
         '''
-
         wordlist = self.sen[:-1].split()
         self.wordcount = len(wordlist)
         return wordlist
