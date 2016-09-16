@@ -1,13 +1,11 @@
 import DocumentStream
-
 from DocumentStream import DocumentStream
 
-
 class Document:
-
-    
-    
     def __init__(self,filename = ''):
+        '''
+        initiate variables
+        '''
         self._Slist = []
         self.filename = filename
         self.id = 0
@@ -17,22 +15,30 @@ class Document:
         
         
     def __len__(self):
+        '''
+        return length of self._Slist
+        '''
         return len(self._Slist)
         
 
     def __getitem__(self,index):
-        
+        '''
+        getter for variable in self
+        '''
         return self._Slist[index]
+        
     def __setitem__(self,index, value):
         '''
+        setter for variable in self
         '''
-    
-
         assert index >=0 and index < len( self ), 'Put the right index'
         self._Slist[index] = value
 
     def generateWhole(self):
-        
+        '''
+        using text read from DocumentStream
+        return the title information
+        '''
         a = DocumentStream()
         self._Slist = a.readWhole(self.filename)
         firstsen = self._Slist[0]
@@ -49,7 +55,6 @@ class Document:
                 firstlineword += fircopy[0:loc].split()
                 break
             loc += 1
-
         if False not in [k[0].isupper() for k in firstlineword]:
             title = firstsen[0:loc]
         return title
@@ -62,24 +67,24 @@ class Document:
         fileout.close
         '''
 
-
     def getWordCount(self):
+        '''
+        count how many words are there in a file by splitting with space
+        '''
         a = DocumentStream()
         a.readfile(self.filename)
         text = a.text
         self.wordcount = len(text.split())
         return self.wordcount
         
-        
-        
-        
-    
     def getLineCount(self):
+        '''
+        count number of lines identified by "\n"
+        '''
         a = DocumentStream()
         a.readfile(self.filename)
         text = a.text
         self.linecount = text.count('\n')
-        
         return self.linecount
     
         
