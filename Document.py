@@ -1,11 +1,13 @@
 import DocumentStream
+
 from DocumentStream import DocumentStream
+
+
 class Document:
 
+    
+    
     def __init__(self,filename = ''):
-        '''
-        initiate variables
-        '''
         self._Slist = []
         self.filename = filename
         self.id = 0
@@ -13,26 +15,27 @@ class Document:
         self.linecount = 0
         self.charcount = 0
         
-    def __getitem__(self):
-        '''
-        getter for variable in self
-        '''
-        pass
+        
+    def __len__(self):
+        return len(self._Slist)
+        
 
-    def__setitem__(self):
+    def __getitem__(self,index):
+        
+        return self._Slist[index]
+    def __setitem__(self,index, value):
         '''
-        setter for variable in self
         '''
-        pass
+    
+
+        assert index >=0 and index < len( self ), 'Put the right index'
+        self._Slist[index] = value
 
     def generateWhole(self):
-        '''
-        using text read from DocumentStream
-        return the title information
-        '''
+        
         a = DocumentStream()
-        Slist = a.readWhole(self.filename)
-        firstsen = Slist[0]
+        self._Slist = a.readWhole(self.filename)
+        firstsen = self._Slist[0]
         fircopy = firstsen
         loc = 0
         firstlineword = []
@@ -40,12 +43,13 @@ class Document:
         fircopy = fircopy.replace('"',' ')
         fircopy = fircopy.replace('-',' ')
         for i in fircopy:
+            
             if i == '\n':
                 i.replace('\n', ' ')               
                 firstlineword += fircopy[0:loc].split()
                 break
             loc += 1
-        print(firstlineword)
+
         if False not in [k[0].isupper() for k in firstlineword]:
             title = firstsen[0:loc]
         return title
@@ -60,9 +64,6 @@ class Document:
 
 
     def getWordCount(self):
-        '''
-        count how many words are there in a file by splitting with space
-        '''
         a = DocumentStream()
         a.readfile(self.filename)
         text = a.text
@@ -74,13 +75,11 @@ class Document:
         
     
     def getLineCount(self):
-        '''
-        count number of lines identified by "\n"
-        '''
         a = DocumentStream()
         a.readfile(self.filename)
         text = a.text
         self.linecount = text.count('\n')
+        
         return self.linecount
     
         
