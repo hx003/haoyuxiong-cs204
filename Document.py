@@ -6,12 +6,12 @@ class Document:
         '''
         initiate variables
         '''
-        self._Slist = []
+        self.__Slist = []
         self.filename = filename
-        self.id = 0
-        self.wordcount = 0
-        self.linecount = 0
-        self.charcount = 0
+        self.__id = 0
+        self.__wordcount = 0
+        self.__linecount = 0
+        self.__charcount = 0
         
         
     def __len__(self):
@@ -20,19 +20,41 @@ class Document:
         '''
         return len(self._Slist)
         
+    def wordcount(self, num ):
+        self.__wordcount = num
 
+    @property
+    def wordcount(self):
+        return self.__wordcount
+        
+
+    def linecount(self, num ):
+        self.__linecount = num
+
+    @property
+    def linecount(self):
+        return self.__linecount
+
+
+    def charcount(self, num ):
+        self.__charcount = num
+
+    @property
+    def charcount(self):
+        return self.__charcount
+        
     def __getitem__(self,index):
         '''
         getter for variable in self
         '''
-        return self._Slist[index]
+        return self.__Slist[index]
         
     def __setitem__(self,index, value):
         '''
         setter for variable in self
         '''
         assert index >=0 and index < len( self ), 'Put the right index'
-        self._Slist[index] = value
+        self.__Slist[index] = value
 
     def generateWhole(self):
         '''
@@ -40,8 +62,8 @@ class Document:
         return the title information
         '''
         a = DocumentStream()
-        self._Slist = a.readWhole(self.filename)
-        firstsen = self._Slist[0]
+        self.__Slist = a.readWhole(self.filename)
+        firstsen = self.__Slist[0]
         fircopy = firstsen
         loc = 0
         firstlineword = []
