@@ -18,7 +18,7 @@ class Document:
         '''
         return length of self._Slist
         '''
-        return len(self._Slist)
+        return len(self.__Slist)
         
     def wordcount(self, num ):
         self.__wordcount = num
