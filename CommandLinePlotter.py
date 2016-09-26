@@ -1,4 +1,6 @@
 import math
+import os
+import random
 class CommandLinePlotter:
     def Plan2D(x, y):
         '''
@@ -9,7 +11,7 @@ class CommandLinePlotter:
         digitX = math.ceil(math.log(x[1], 10))
         if x[1] == 10 ** digitX:
             digitX += 1
-        print(digitX)
+  
         for m in range(y[1] - y[0] + 1):
             print(str(y[1] - m) + "\t" + "|")
         print("\t ", end = "")
@@ -28,14 +30,18 @@ class CommandLinePlotter:
             else:
                 print(str(x[0] + i) + " " * (digitX - a + 1), end = "" )
      
-    def Scatter2D(x, y = None):
+    def Scatter2D(x, y = None, label = ''):
         '''
         assume two lists are sorted with same length
         if only one list is given, it will be used as y-axis
         x-axis will be 1 to length of the list
         print axis and plot the points indicated by "x"
         must be number lists
+        if list y is given, label must be given at the same time
         '''
+        (columns, lines) = os.get_terminal_size()
+        
+        # exchange x and y when only one list is given
         if y == None:
             y = []
             for i in range(len(x)):
@@ -43,41 +49,149 @@ class CommandLinePlotter:
             x = []
             for i in range(len(y)):
                 x.append(i + 1)
+
         digitX = math.ceil(math.log(max(x), 10))  
         if max(x) == 10 ** digitX:
             digitX += 1
-        for m in range(max(y) - min(y) + 1):
-            if max(y) - m in y:
-                a = y.index(max(y) - m)
-                print(str(max(y) - m) + "\t" + "|" + " " * (x[a] - min(x)) * (digitX + 1) + "x")
+                
+        # scaling
+        ysf = math.ceil((max(y) - min(y)) / (lines - 3)) # y scaling factor
+        xsf = math.ceil((max(x) - min(x)) / (columns - 6) * (digitX + 2) )# x scaling factor
+        y1 = []
+        x1 = []
+        for i in y:
+            y1.append(round(i / ysf))
+        for i in x:
+            x1.append(round(i / xsf))
+        # plotting
+        
+        """
+        print(y)
+        print(y1)
+        print(ysf)
+        print(lines)
+        print()
+        print(x)
+        print(x1)
+        print(xsf)
+        print(columns)
+        print()
+        """
+        
+        print(label)
+        
+        for m in range(max(y1) - min(y1) + 1):
+            if max(y1) - m in y1:
+                a = y1.index(max(y1) - m)
+                print(str(y1[a] * ysf) + "\t" + "|" + " " * (x1[a] - min(x1)) * (digitX + 1) + "x")
             else:
-                print(str(max(y) - m) + "\t" + "|")
+                print(str(int(max(y) - m * ysf)) + "\t" + "|")
                 
         print("\t ", end = "")
         
-        for i in range(max(x) - min(x) + 1):
-            if i == max(x) - min(x):
-                print("—" * (digitX + 1))
-            else:
-                print("—" * (digitX + 1), end = "")
-                
+        for i in range(max(x1) - min(x1) + 1):
+            print("—" * (digitX + 1), end = "")
+            
+        print()                    
         print("\t ", end = "")
             
-        for i in range(max(x) - min(x) + 1):
-            b = math.ceil(math.log(min(x) + i, 10))
+        for i in range(max(x1) - min(x1) + 1):
+            b = math.ceil(math.log(min(x) + i * xsf, 10))
             if min(x) + i == 10 ** b:
                 b += 1
-            if i == max(x) - min(x):
-                print(min(x) + i)
+            if i == 0:
+                print(str(math.ceil(min(x) + i * xsf)), end = "")
             else:
-                print(str(min(x) + i) + " " * (digitX - b + 1), end = "")
-
+                print(" " * (digitX - b + 1) + str(math.ceil(min(x) + i * xsf)), end = "")
             
+        print()
+
+    def barGraph(x, y = None, label = ''):
+        '''
+        assume two lists are sorted with same length
+        if only one list is given, it will be used as y-axis
+        x-axis will be 1 to length of the list
+        print axis and plot the points indicated by "x"
+        must be number lists
+        if list y is given, label must be given at the same time
+        '''
+        (columns, lines) = os.get_terminal_size()
         
+        # exchange x and y when only one list is given
+        if y == None:
+            y = []
+            for i in range(len(x)):
+                y.append(x[i])
+            x = []
+            for i in range(len(y)):
+                x.append(i + 1)
+
+        digitX = math.ceil(math.log(max(x), 10))  
+        if max(x) == 10 ** digitX:
+            digitX += 1
+                
+        # scaling
+        ysf = math.ceil((max(y) - min(y)) / (lines - 3)) # y scaling factor
+        xsf = math.ceil((max(x) - min(x)) / (columns - 6) * (digitX + 2) )# x scaling factor
+        y1 = []
+        x1 = []
+        for i in y:
+            y1.append(int(i / ysf))
+        for i in x:
+            x1.append(int(i / xsf))
+        # plotting
+        """
+        print(y)
+        print(y1)
+        print(ysf)
+        print(lines)
+        print()
+        print(x)
+        print(x1)
+        print(xsf)
+        print(columns)
+        print()
+        """
+        
+        print(label)
+        
+        # plotting
+
+        for m in range(max(y1) - min(y1) + 1):
+            legend = chr(random.choice(range(33, 128)))
+            if max(y1) - m in y1:
+                a = y1.index(max(y1) - m)
+                print(str(y1[a] * ysf) + "\t" + "|" + legend * (x1[a] - min(x1)) * (digitX + 1) + legend)
+            else:
+                print(str(int(max(y) - m * ysf)) + "\t" + "|")
+                    
+        print("\t ", end = "")
+        
+        for i in range(max(x1) - min(x1) + 1):
+            print("—" * (digitX + 1), end = "")
             
+        print()                    
+        print("\t ", end = "")
+            
+        for i in range(max(x1) - min(x1) + 1):
+            b = math.ceil(math.log(min(x) + i * xsf, 10))
+            if min(x) + i == 10 ** b:
+                b += 1
+            if i == 0:
+                print(str(math.ceil(min(x) + i * xsf)), end = "")
+            else:
+                print(" " * (digitX - b + 1) + str(math.ceil(min(x) + i * xsf)), end = "")
+            
+        print()
 
+"""
+def main():
+    CommandLinePlotter.Scatter2D([1000, 250, 30],[20,80,150],'m/s')
+    CommandLinePlotter.barGraph([1000, 250, 30],[20,80,150],'m/s')
 
-        
+if __name__ == '__main__':
+    main()
+"""
             
           
         
