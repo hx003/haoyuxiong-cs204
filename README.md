@@ -1,1 +1,1 @@
-Iris Fu and Haoyu Xiong worked together through the checkpoint1
+Iris Fu and Haoyu Xiong worked together through the checkpoint
