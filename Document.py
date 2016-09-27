@@ -25,8 +25,7 @@ class Document:
         '''
         assert index >=0 and index < len( self ), 'Put the right index'
         self.__Slist[index] = value
-
-    def generateWhole(self):    
+   
     def __len__(self):
         '''
         return length of self._Slist
@@ -55,7 +54,8 @@ class Document:
     @property
     def charcount(self):
         return self.__charcount
-        
+    
+    def generateWhole(self): 
         '''
         using text read from DocumentStream
         return the title information
@@ -92,20 +92,16 @@ class Document:
         '''
         count how many words are there in a file by splitting with space
         '''
-        a = DocumentStream()
-        a.readfile(self.filename)
-        text = a.text
-        self.wordcount = len(text.split())
+        for i in range(len(self.__Slist)):
+            self.wordcount += len(i.split())
         return self.wordcount
         
     def getLineCount(self):
         '''
         count number of lines identified by "\n"
         '''
-        a = DocumentStream()
-        a.readfile(self.filename)
-        text = a.text
-        self.linecount = text.count('\n')
+        for i in range(len(self.__Slist)):
+            self.linecount += i.count('\n')
         return self.linecount
     
         
