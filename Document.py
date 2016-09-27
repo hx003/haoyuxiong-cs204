@@ -13,7 +13,20 @@ class Document:
         self.__linecount = 0
         self.__charcount = 0
         
+    def __getitem__(self,index):
+        '''
+        get the sentence within self.__Slist with given the index
+        '''
+        return self.__Slist[index]
         
+    def __setitem__(self,index, value):
+        '''
+        set a sentence within the self.__Slist to a given value
+        '''
+        assert index >=0 and index < len( self ), 'Put the right index'
+        self.__Slist[index] = value
+
+    def generateWhole(self):    
     def __len__(self):
         '''
         return length of self._Slist
@@ -43,20 +56,6 @@ class Document:
     def charcount(self):
         return self.__charcount
         
-    def __getitem__(self,index):
-        '''
-        getter for variable in self
-        '''
-        return self.__Slist[index]
-        
-    def __setitem__(self,index, value):
-        '''
-        setter for variable in self
-        '''
-        assert index >=0 and index < len( self ), 'Put the right index'
-        self.__Slist[index] = value
-
-    def generateWhole(self):
         '''
         using text read from DocumentStream
         return the title information
