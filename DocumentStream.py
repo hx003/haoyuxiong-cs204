@@ -16,6 +16,7 @@ class DocumentStream:
         result = DocumentStreamError.existFileName(filename)
         if result == "Pass":
             file = open(filename,'r')
+            self.firstline = file.readline()
             self.text = file.read()
             file.close()
         else:
@@ -66,3 +67,12 @@ class DocumentStream:
             file.write(text)
             file.close()
 
+    def parsetitleauthor(self,filename):
+        DocumentStream.readfile(self,filename)
+        info = self.firstline
+        info.strip('The Project Gutenberg EBook of ')
+        firstbooksecondauthor = info.split(',')
+        return firstbooksecondauthor
+
+    
+        
