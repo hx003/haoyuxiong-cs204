@@ -11,16 +11,12 @@ class MatPlotPloter:
     def scatterPlot(self, x, y):
         """
         do a scatter plot with two lists x and y
-        where the size of the bubble is related to the y value
         """
 	
         plt.figure(self.figure)
         self.figure += 1
         colors = np.random.rand(len(y))
-        #size = [10 * np.pi * i ** 2 for i in y]
-        y_pos = np.arange(len(y))
-        plt.plot(x, y_pos,'ro')   #s = size, c = colors, alpha = 0.5)
-        plt.yticks(y_pos,y)
+        plt.scatter(x, y, s = 100, c = colors, alpha = 0.5)
         plt.show()
         
     def barGraph(self, x, y):
