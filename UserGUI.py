@@ -79,7 +79,7 @@ class Ploter:
             lista[1] += [topdict[i]] #frequency
         print(lista)
         a = MatPlotPloter()
-        a.scatterPlot(lista[1],lista[0])
+        a.scatterPlot(range(len(lista[1])), lista[1])
 
     
 root = Tk()
