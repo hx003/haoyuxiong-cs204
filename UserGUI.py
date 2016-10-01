@@ -78,9 +78,10 @@ class Ploter:
             lista[0] += [i] #words
             lista[1] += [topdict[i]] #frequency
         print(lista)
-        graph = MatPlotPloter.scatterPlot(lista[1],lista[0])
+        a = MatPlotPloter()
+        a.scatterPlot(lista[1],lista[0])
 
     
 root = Tk()
-my_gui = Calculator(root)
+my_gui = Ploter(root)
 root.mainloop()
