@@ -68,6 +68,11 @@ class DocumentStream:
             file.close()
 
     def parsetitleauthor(self,filename):
+        '''
+        analyze and parse the name of the author and the book out
+        input the filename 
+        out put a list [Bookname, authorname]
+        '''
         DocumentStream.readfile(self,filename)
         info = self.firstline
         info.strip('The Project Gutenberg EBook of ')
