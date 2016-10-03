@@ -9,10 +9,8 @@ def main():
     filename = input('Please input a filename:    ')
     fileA = Document(filename)
     title = fileA.generateWhole()
-    wordlist = []
-    for i in range(len(fileA)):
-        sen = Sentence(fileA[i])
-        wordlist += sen.parseWords()
+    wordlist = fileA.wordlist
+
     
     
     worddict = BasicStats.createFreqMap(wordlist)

@@ -13,14 +13,15 @@ class Document:
         self.__wordcount = 0
         self.__linecount = 0
         self.__charcount = 0
-        
-    def __getitem__(self,index):
+    
+    @property
+    def Slist(self):
         '''
         get the sentence within self.__Slist with given the index
         '''
         return self.__Slist[index]
-        
-    def __setitem__(self,index, value):
+           
+    def Slist(self,index):
         '''
         set a sentence within the self.__Slist to a given value
         '''
