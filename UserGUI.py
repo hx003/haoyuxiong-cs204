@@ -8,8 +8,17 @@ from BasicStats import BasicStats
 from MatPlotPloter import MatPlotPloter
 
 class Ploter:
+    '''
+    from the web page, I learned how to use the graphic user interface in a abbreviated way. For example, how a button object
+    and a input entry are connected. And the way the input are updated.
+    We haven't mastered the usage of GUI, but I was introduced to the basic functionality of parameters and implementation of 
+    graphing.
+    '''
 
     def __init__(self, master):
+        '''
+        initialize the window of program with the buttons, labels and entries of inputs.
+        '''
         self.master = master
         master.title("File Stats Plotter")
 
@@ -41,6 +50,9 @@ class Ploter:
 
     
     def validate(self, new_text):
+        '''
+        validate the legality of topn number input
+        '''
         if not new_text: # the field is being cleared
             self.entered_number = 0
             return True
@@ -53,6 +65,9 @@ class Ploter:
             return False
     
     def validate1(self, new_text):
+        '''
+        test the validity of the filename inputed
+        '''
         if not new_text: # the field is being cleared
             self.entered_filename = ''
             return True
@@ -65,6 +80,9 @@ class Ploter:
             return False
     
     def generate(self):
+        '''
+        generate the graph based on the filename and the topn inputed.
+        '''
         print(self.entered_filename)
         file = Document(self.entered_filename)
         file.generateWhole()
