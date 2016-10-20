@@ -15,13 +15,14 @@ class Document:
         self.__charcount = 0
     
     @property
-    def Slist(self):
+    def Slist(self, index):
         '''
         get the sentence within self.__Slist with given the index
         '''
         return self.__Slist[index]
-           
-    def Slist(self,index):
+    
+    @Slist.setter       
+    def Slist(self,index, value):
         '''
         set a sentence within the self.__Slist to a given value
         '''
