@@ -3,30 +3,27 @@ class ListNode:
         '''
         initialize the node
         '''
-        self.data = [data]
+        self.data = data
         self.next = None
     def __getitem__(self):
         return self.data
 
 class sllist:
-    def __init__(self):
+    def __init__(self, stacksize = 10):
         '''
         initialize a list with size = 0
         '''
         self.size = 0
         self.head = None
         self.stack = SStack()
+        for i in range(stacksize):
+            self.stack.push()
         
+
+    
     def __len__(self):
         # length of the list is its size
         return self.size     
-
-    def insert(self, item):
-        '''
-        insert a node with given item to the given index
-        if the index is greater than the current size of the list
-        insert to the last
-        '''
         curnode = self.head
 
     def insert(self, item, index):
@@ -76,10 +73,12 @@ class sllist:
         '''
         if self.stack.isEmpty():
                 
-            newNode = ListNode(item)
-            newNode.data += [1]
+            newNode = ListNode([item,1])
         else:
-            newNode = self.stack.pop()
+            newNode = self.stack.head
+            newNode.data[0] = item
+            newNode.data[1] = 1
+            self.stack.pop()
             
         if self.size == 0:
             self.head = newNode
@@ -170,9 +169,9 @@ class SStack:
     def __init__(self):
         self.head = None
         self.__size = 0
-    def push(self, item, value):
-        newnode = Node(item)
-        newnode.data += [value]
+    def push(self, item=None, value= None):
+        newnode = ListNode([item,value])
+
         newnode.next = self.head
         self.head = newnode
         self.__size += 1
