@@ -26,6 +26,9 @@ class BasicStats:
         return adict
     @staticmethod
     def slinkFreq(wlist):
+        '''
+        O will be O(n^2)
+        '''    
         b = wlist
         allist = sllist()
         for word in b:
