@@ -1,19 +1,23 @@
 from DecisionTree import *
-def prefixWalk(root, prevWalk):
+def prefixWalk(root, prevWalk = ''):
     if root == None:
         return prevWalk
-    prevWalk += root.key + ' '
     if root.children != None:
         for key, val in root.children.items():
+            prevWalk = prevWalk + str(root.key) + ' '
+            prevWalk += str(key) + ' '
             prefixWalk(val, prevWalk)
+
+
     return prevWalk
 
-def postfixWalk(root, prevWalk):
+def postfixWalk(root, prevWalk = ''):
     if root == None:
         return prevWalk
     if root.children != None:
         for key, val in root.children.items():
             prefixWalk(val, prevWalk)
+            prevWalk += str(key) + ' ' 
         prevWalk += root.key + ' '
     return prevWalk
 
@@ -50,12 +54,12 @@ def test():
 
         finally:
             break
-
+    
     infoTree.train(infoTree.root, infolists, attributes)
     text = 'Prefix Walk \n'
-    text += prefixWalk(infoTree.root, '')
-    text += 'Postfix Walk \n'
-    text += postfixWalk(infoTree.root, '')
+    text += prefixWalk(infoTree.root)
+    text += '\nPostfix Walk \n'
+    text += postfixWalk(infoTree.root)
     writeFile(text, 'author')
     aftereval = infoTree.eval(testlists)
     print(aftereval)
