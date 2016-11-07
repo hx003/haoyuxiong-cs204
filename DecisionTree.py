@@ -39,8 +39,13 @@ class DecisionTree:
                     iginfo[odlist[i]][k] = self.igcaculate(self.catagorizediff(iginfo[odlist[i]][k]))
                     igdict[odlist[i]] -= (iginfo[odlist[i]][k][1]/len(tdlist))*iginfo[odlist[i]][k][0]
                 igdict[odlist[i]] = igc + igdict[odlist[i]]
+                if root == self.root and igdict[odlist[i]] == igc*len(tdlist):
+                    odlist[i] = None
+                    
+            
         maxc = None
         maxcn = None
+
         if igdict == {} and iginfo == {}:
             return None
         for l in igdict:
@@ -122,6 +127,6 @@ class DecisionTree:
             while root.children!= None:
                 
                 root = root.children[tdlist[i][self.odlist.index(root.key)]]
-            tdlist[0] = root.key
+            tdlist[i][0] = root.key
         return tdlist
 
