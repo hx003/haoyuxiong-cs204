@@ -4,11 +4,10 @@ def prefixWalk(root, prevWalk = ''):
         return prevWalk
     if root.children != None:
         prevWalk += str(root.key) + ' '
-        print(root.key)
         for key, val in root.children.items():
-            prevWalk += '--' + str(key) + ' '
+            prevWalk += str(key) + ' '
             prevWalk = prefixWalk(val, prevWalk)
-    prevWalk += str(root.key) + '   '
+    prevWalk += str(root.key) + ' '
     return prevWalk
 
 def postfixWalk(root, prevWalk = ''):
@@ -16,9 +15,10 @@ def postfixWalk(root, prevWalk = ''):
         return prevWalk
     if root.children != None:
         for key, val in root.children.items():
-            prefixWalk(val, prevWalk)
+            prevWalk = prefixWalk(val, prevWalk)
             prevWalk += str(key) + ' ' 
         prevWalk += str(root.key) + ' '
+    prevWalk += str(root.key) + ' '
     return prevWalk
 
 def writeFile(text, author):
