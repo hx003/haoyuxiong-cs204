@@ -7,7 +7,7 @@ class TextFilter:
         for i in range(len(D)):
             #wordlist is derived from the sentence list of the document
             self.wordlist.extend(D.getIndexSlist(i).split())
-        
+
     def nSpace(self):
         #nomalizes the white space
         '''
@@ -16,12 +16,12 @@ class TextFilter:
         '''
         pass
 
-        
+
     def nCase(self):
         #make all letters lower case
         for i in range(len(self.wordlist)):
             self.wordlist[i] = self.wordlist[i].lower()
-            
+
     def sNullChar(self):
         #remove characters not in ascii set
         for i in range(len(self.wordlist)):
@@ -35,7 +35,7 @@ class TextFilter:
                    (ord(a[i][ch]) >= 141 and ord(a[i][ch]) <= 172):
                     word += a[i][ch]
             self.wordlist[i] = word
-        
+
     def sNumber(self):
         #remove all numbers
         for i in range(len(self.wordlist)):
@@ -69,6 +69,20 @@ class TextFilter:
             stringList = stringList[1:]
         for i in range(len(self.wordlist)):
             self.text += self.wordlist[i] + ' '
-        return self.text       
+        return self.text
 
-        
+    def nWords(fileName):
+        '''
+        remove all words provided in the file with given fileName
+        '''
+        words = []
+        file = open(fileName, 'r')
+        text = file.read()
+        file.close()
+        text = text.lower()
+        text = text.replace('\t', ' ')
+        text = text.replace('\n', ' ')
+        words = text.split()
+        for w in self.wordlist:
+            while w in words:
+                self.wordlist.remove(w)
