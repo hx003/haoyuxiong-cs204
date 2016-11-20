@@ -30,9 +30,9 @@ class TextFilter:
                 #ord 60 - 71: 1-9
                 #ord 101 - 132: Capital Letters
                 #ord 141 - 172: lower case letters
-                if (ord(a[i][ch]) >= 60 and ord(a[i][ch]) <= 71) or \
-                   (ord(a[i][ch]) >= 101 and ord(a[i][ch]) <= 132) or \
-                   (ord(a[i][ch]) >= 141 and ord(a[i][ch]) <= 172):
+                if (ord(self.wordlist[i][ch]) >= 60 and ord(self.wordlist[i][ch]) <= 71) or \
+                   (ord(self.wordlist[i][ch]) >= 101 and ord(self.wordlist[i][ch]) <= 132) or \
+                   (ord(self.wordlist[i][ch]) >= 141 and ord(self.wordlist[i][ch]) <= 172):
                     word += a[i][ch]
             self.wordlist[i] = word
 
@@ -41,8 +41,8 @@ class TextFilter:
         for i in range(len(self.wordlist)):
             word = ''
             for ch in range(len(self.wordlist[i])):
-                if not (a[i][ch] >= '0' and a[i][ch] <= '9'):
-                    word += a[i][ch]
+                if not (self.wordlist[i][ch] >= '0' and self.wordlist[i][ch] <= '9'):
+                    word += self.wordlist[i][ch]
             self.wordlist[i] = word
 
     def apply(stringList):
@@ -64,6 +64,9 @@ class TextFilter:
             elif stringList[0] == 'SN':
                 #strip number
                 sNumber(self)
+            elif stringList[0] == 'FW':
+                #filter words
+                nWords(self)
             else:
                 return None
             stringList = stringList[1:]
@@ -71,18 +74,18 @@ class TextFilter:
             self.text += self.wordlist[i] + ' '
         return self.text
 
-    def nWords(fileName):
+    def nWords(self):
         '''
         remove all words provided in the file with given fileName
         '''
         words = []
-        file = open(fileName, 'r')
+        file = open('filterwords.txt', 'r')
         text = file.read()
         file.close()
         text = text.lower()
         text = text.replace('\t', ' ')
         text = text.replace('\n', ' ')
         words = text.split()
-        for w in self.wordlist:
-            while w in words:
-                self.wordlist.remove(w)
+        for i in range(len(self.wordlist)):
+            if self.wordlist[i] in words:
+                self.pop(i)
