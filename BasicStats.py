@@ -4,6 +4,9 @@ from DocumentStream import DocumentStream
 from copy import deepcopy
 from sllist import *
 
+
+
+
 class BasicStats:
 
     @staticmethod
@@ -86,7 +89,8 @@ class BasicStats:
             ddict[BasicStats.maxl(ddict)] = 1
         return cdict
 
-    def TopN(sslist, n):
+    def LTopN(sslist, n):
+        #linked list
         a = sllist()
         b = sslist.head
         small = 0
@@ -171,4 +175,149 @@ class BasicStats:
         return cdict
         
     
+    def HTopNBottomN(adict, n):
+        maxlistn = [0]
+        maxlists = [0]
+        minlistn = [0]
+        minlists = [0]
+        for i in adict:
+            if len(maxlistn) < n + 1:
+                HheapAdd(maxlistn,maxlists, adict[i], i)
+                LheapAdd(minlistn, minlists, adict[i], i)
+                
+                
+            else:
+                if adict[i] > maxlistn[1]:
+                    maxlistn[1] = adict[i]
+                    maxlists[1] = i
+                    lfixdown(maxlistn, maxlists, 1)
+                elif adict[i] < minlistn[1]:
+                    minlistn[1] = adict[i]
+                    minlists[1] = i
+                    hfixdown(minlistn, minlists, 1)
+        return [maxlistn, maxlists,minlistn, minlists]
+
+
+def parentindexforbaseone(heap, rootindex):
+    #for base one
+    return rootindex //2
+
+def leftchildforbase1(heap, rootindex):
+    if rootindex*2 >= len(heap):
+        return -1
+    return rootindex*2
+
+def rightchildforbase1(heap, rootindex):
+    if rootindex*2 + 1 >= len(heap):
+        return -1
+    return rootindex*2 + 1
+
+
+def HfixUp(heapn,heaps, index):
+    #for base 1
+    k = index
+    if heapn[k] > heapn[k//2]:
+        return
+    else:
+        if k == 1:
+            return
+        a = heapn[k]
+        heapn[k] = heapn[k//2]
+        heapn[k//2] = a
+        b = heaps[k]
+        heaps[k] = heaps[k//2]
+        heaps[k//2] = b       
+
+        HfixUp(heapn,heaps,k//2)
     
+def HheapAdd(heapn,heaps, root, word):
+    heapn += [root]
+    heaps += [word]
+
+    HfixUp(heapn,heaps,len(heapn)-1)
+
+def lfixdown(heapn,heaps, rootindex):
+    loc = rootindex
+    lc = leftchildforbase1(heapn, loc)
+    rc = rightchildforbase1(heapn, loc)
+    a = heapn[loc]
+    b = heaps[loc]
+    if lc == -1 and rc == -1:
+        return
+    elif lc == -1:
+        if heapn[loc] > heapn[rc]:
+            heapn[loc] = heapn[rc]
+            heapn[rc] = a
+            heaps[loc] = heaps[rc]
+            heaps[rc] = b           
+            lfixdown(heapn,heaps, rc)
+    elif rc == -1:
+        if heapn[loc] > heapn[lc]:
+            heapn[loc] = heapn[lc]
+            heapn[lc] = a
+            heaps[loc] = heaps[rc]
+            heaps[rc] = b
+            lfixdown(heapn,heaps, lc)
+    else:
+        alist = [heapn[lc],heapn[rc]]
+        way = [lc,rc][alist.index(min(alist))]
+        if heapn[way] < heapn[loc]:
+            heapn[loc] = heapn[way]
+            heapn[way] = a
+            heaps[loc] = heaps[rc]
+            heaps[rc] = b
+            lfixdown(heapn,heaps, way)
+
+def hfixdown(heapn,heaps, rootindex):
+    loc = rootindex
+    lc = leftchildforbase1(heapn, loc)
+    rc = rightchildforbase1(heapn, loc)
+    a = heapn[loc]
+    b = heaps[loc]
+    if lc == -1 and rc == -1:
+        return
+    elif lc == -1:
+        if heapn[loc] < heapn[rc]:
+            heapn[loc] = heapn[rc]
+            heapn[rc] = a
+            heaps[loc] = heaps[rc]
+            heaps[rc] = b           
+            hfixdown(heapn,heaps, rc)
+    elif rc == -1:
+        if heapn[loc] < heapn[lc]:
+            heapn[loc] = heapn[lc]
+            heapn[lc] = a
+            heaps[loc] = heaps[rc]
+            heaps[rc] = b
+            hfixdown(heapn,heaps, lc)
+    else:
+        alist = [heapn[lc],heapn[rc]]
+        way = [lc,rc][alist.index(max(alist))]
+        if heapn[way] > heapn[loc]:
+            heapn[loc] = heapn[way]
+            heapn[way] = a
+            heaps[loc] = heaps[rc]
+            heaps[rc] = b
+            hfixdown(heapn,heaps, way)
+
+def LfixUp(heapn,heaps, index):
+    #for base 1
+    k = index
+    if heapn[k] < heapn[k//2]:
+        return
+    else:
+        if k == 1:
+            return
+        a = heapn[k]
+        heapn[k] = heapn[k//2]
+        heapn[k//2] = a
+        b = heaps[k]
+        heaps[k] = heaps[k//2]
+        heaps[k//2] = b       
+
+        LfixUp(heapn,heaps,index//2)
+    
+def LheapAdd(heapn,heaps, root, word):
+    heapn += [root]
+    heaps += [word]
+    LfixUp(heapn,heaps,len(heapn)-1)
