@@ -15,12 +15,15 @@ class SKTree:
         self.tree = None
         self.labels = None
         self.depth = None
+        self.worddict = {}
 
     def train(self, data, labels, depth):
         """We assume that data is a 2D python list, the target in colum 0"""
         self.labels = labels
         self.depth = depth
-        
+
+        data = self.getdict(data)
+
         x = [None]*len(data)
         y = [None]*len(data)
 
@@ -37,7 +40,8 @@ class SKTree:
 
     def eval(self, data):
         """We assume that data is a 2D python list, with the target [0] == None"""
-
+        data = self.getdict(data)
+ 
         x = [None]*len(data)
         for row in range(len(data)):
             t = []
@@ -45,15 +49,28 @@ class SKTree:
                 t += [data[row][col]]
             x[row] = t
 
-        y = self.tree.predict(y)
+        y = self.tree.predict(x)
+
         #Now you will have to get the values from y and move them to the targe column of data
         for i in range(len(x)):
-            x[i][0] == y[i]
-        return x
-    
+            x[i][0] = y[i]
+        result = []
+        for row in x:
+            for key in self.worddict:
+                if self.worddict[key] == row[0]:
+                    result.append(key)
+        return result
+
     def toDot(self, filename):
         dot_data = export_graphviz(self.tree, out_file=filename, feature_names=self.labels)
-        
-        
-        
-        
+
+    def getdict(self, data):
+        result = []
+        for row in data:
+            resultrow = []
+            for e in row:
+                if e not in self.worddict:
+                    self.worddict[e] = len(self.worddict)
+                resultrow.append(self.worddict[e])
+            result.append(resultrow)
+        return result
