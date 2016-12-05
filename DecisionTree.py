@@ -1,6 +1,8 @@
 
 from copy import deepcopy
 import math
+import types
+import random
 
 class DTNode:
 
@@ -15,6 +17,10 @@ class DecisionTree:
         self.odlist = None
 
     def train(self, root, tdlist, odlist, maxd = None):
+        '''
+        train the decision tree with given values of attributes -> tdlist
+        odlist contains attribute names
+        '''
         if root == self.root:
             self.odlist = odlist
         classifier = odlist[0]
@@ -39,7 +45,7 @@ class DecisionTree:
                     self.odlist[i] = None
                 else:
                     for k in iginfo[odlist[i]]:
-                        
+
                         iginfo[odlist[i]][k] = self.igcaculate(self.catagorizediff(iginfo[odlist[i]][k]))
                         igdict[odlist[i]] -= (iginfo[odlist[i]][k][1]/len(tdlist))*iginfo[odlist[i]][k][0]
 
@@ -81,13 +87,14 @@ class DecisionTree:
             root.children = childrendict
             return root
 
-        
-                        
-                        
-            
-        
+
+
+
+
+
 
     def catagorizediff(self, tdlist, columnnum = None):
+        #calculate the difference of attributes in tdlist
         ddiff = {}
         for i in tdlist:
             if i != None:
@@ -101,35 +108,61 @@ class DecisionTree:
                     ddiff[attr] = 1
         return ddiff
 
-       
-    
+
+
     def igcaculate(self,diction):
+        #calculate the information gain
         total = 0
-        for i in diction:           
+        for i in diction:
             total += diction[i]
         ig = 0
+        g = None
         for j in diction:
             if diction[j] > 0:
                 ig -= (diction[j]/total)*math.log(diction[j]/total, 2)
                 g = j
 
         if ig != 0.0:
-            
+
             if float(ig) == float(-math.log(1/total, 2)):
                 g = [i for i in diction]
             else:
                 g = None
-            
+
         return ig, total, g
-    
+
 
 
     def eval(self, tdlist):
+        #evaluate the tdlist by changing the first column to correct filename
         for i in range(len(tdlist)):
             root = self.root
             while root.children!= None:
+                s = tdlist[i][self.odlist.index(root.key)]
+                if s in root.children:
 
-                root = root.children[tdlist[i][self.odlist.index(root.key)]]
+                    root = root.children[s]
+                elif s not in root.children and self.isint(s):
+                    d = 100000000
+                    k = None
+                    for j in root.children:
+                        a = int(j)-int(s)
+                        if a<= d:
+                            d = a
+                            k = j
+                    root = root.children[k]
+                elif s not in root.children and not self.isint(s):
+                    return 'Not applicable'
+            if isinstance(root.key, list):
+                root.key = random.choice(root.key)
             tdlist[i][0] = root.key
+
         return tdlist
 
+    def isint(self, s):
+        # find out if s is and integer
+        try:
+            int(s)
+            return True
+        except Exception:
+            return False

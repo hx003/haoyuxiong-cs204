@@ -175,14 +175,14 @@ class BasicStats:
         
     
     def HTopNBottomN(adict, n):
-        maxlistn = [0]
-        maxlists = [0]
-        minlistn = [0]
-        minlists = [0]
+        maxlistn = [0]#top words
+        maxlists = [0]#freq
+        minlistn = [0]#bottom words
+        minlists = [0]#freq
         for i in adict:
             if len(maxlistn) < n + 1:
-                Heapsort.HheapAdd(maxlistn,maxlists, adict[i], i)
-                Heapsort.LheapAdd(minlistn, minlists, adict[i], i)
+                Heapsort.LheapAdd(maxlistn,maxlists, adict[i], i)
+                Heapsort.HheapAdd(minlistn, minlists, adict[i], i)
             else:
                 if adict[i] > maxlistn[1]:
                     maxlistn[1] = adict[i]

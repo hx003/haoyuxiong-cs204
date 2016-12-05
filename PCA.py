@@ -1,50 +1,48 @@
 from Document import Document
 from BasicStats import BasicStats
 class PCA:
-    def __init__(self, LoDM, n):
+    def __init__(self, LoDM, LoDMObj, n):
         #LoDM for list of document names
         #n is the number of words considered
         self.LoDM = LoDM
+        self.LoDMObj = LoDMObj
         self.n = n
-        self.processedList = [[None] + LoDM]
-        print(self.processData())
 
     def processData(self):
+        '''
+        create a 2d list for PCA
+        processedList is in forms of [[filename, probs of words]]
+        each row is a document and columns are words
+        wordlist is created by the top n words for the first document
+        '''
         fileA = Document(self.LoDM[0])
         fileA.generateWhole()
         wordlist = fileA.wordlist
-        worddict = BasicStats.topN(BasicStats.createFreqMap(wordlist), self.n)
-        self.wordlist = []
-        for i in worddict:
-            self.wordlist.append(i)
-        print(self.wordlist)
+        words = BasicStats.HTopNBottomN(BasicStats.createFreqMap(wordlist), self.n)
+        self.wordlist = words[1][1:]
+        self.processedList = []
         self.dictList = []
-        for item in self.LoDM:
-            theFile = Document(item)
-            theFile.generateWhole()
-            wordlist = theFile.wordlist
-            freqMap = BasicStats.createFreqMap(wordlist)
-            self.dictList.append(freqMap)
-        print('finished creating dict')
         self.wordCount = []
-        for item in self.dictList:
-            count = 0
-            for i in item:
-                count += item[i]
-            self.wordCount.append(count)
-        print(self.wordCount)
-        for w in self.wordlist:
+        for item in self.LoDMObj:
+            freqMap = BasicStats.createFreqMap(item.wordlist)
+            self.dictList.append(freqMap)
+            self.wordCount.append(item.getWordCount())
+        for i in range(len(self.LoDM)):
             listofProb = []
-            for i in range(len(self.dictList)):
+            for w in self.wordlist:
                 if w in self.dictList[i]:
-                    print(item[w])
-                    listofProb.append(item[w]/self.wordCount[i])
+                    listofProb.append(self.dictList[i][w]/self.wordCount[i])
                 else:
                     listofProb.append(0)
-            result = [w]
+            result = [self.LoDM[i]]
             result.extend(listofProb)
-            print(result)
             self.processedList.append(result)
-        return self.processedList
-
-a = PCA(['GrimmFairyTales.txt','Ulysses.txt'],10)
+        return (self.processedList, self.wordlist)
+'''
+m = ['GrimmFairyTales.txt','Ulysses.txt']
+c = [Document(item) for item in m]
+for item in c:
+    item.generateWhole()
+a = PCA(m, c,3)
+a.processData()
+'''
